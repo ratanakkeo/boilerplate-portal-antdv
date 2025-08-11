@@ -1,0 +1,1164 @@
+{
+  "info": {
+    "name": "Nest Admin API Collection",
+    "description": "Comprehensive API testing collection for nest-admin system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:7001",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get Image Captcha",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/captcha/img?width=100&height=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "captcha", "img"],
+              "query": [
+                {
+                  "key": "width",
+                  "value": "100"
+                },
+                {
+                  "key": "height",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.token) {",
+                  "        pm.collectionVariables.set('accessToken', response.data.token);",
+                  "        console.log('Token saved:', response.data.token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Postman/Test-Client"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"a123456\",\n  \"captchaId\": \"your-captcha-id-here\",\n  \"verifyCode\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newuser\",\n  \"password\": \"A123456\",\n  \"lang\": \"ZH\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Send Email Code",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/email/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "email", "send"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Account Management",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Menus",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/menus",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "menus"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/permissions",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "permissions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"Updated Nickname\",\n  \"email\": \"updated@example.com\",\n  \"phone\": \"1234567890\",\n  \"remark\": \"Updated remark\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/account/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"a123456\",\n  \"newPassword\": \"A123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/account/password",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "password"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/users?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"A123456\",\n  \"nickname\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"phone\": \"1234567890\",\n  \"roleIds\": [2],\n  \"deptId\": 1,\n  \"status\": 1,\n  \"remark\": \"Test user account\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"Updated Test User\",\n  \"email\": \"updated.testuser@example.com\",\n  \"phone\": \"0987654321\",\n  \"status\": 1,\n  \"remark\": \"Updated test user account\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/users/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/users/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset User Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"A123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/users/2/password",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "users", "2", "password"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Role Management",
+      "item": [
+        {
+          "name": "List Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/roles?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "roles"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Role by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/roles/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "roles", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Role\",\n  \"value\": \"test_role\",\n  \"remark\": \"Test role for API testing\",\n  \"status\": 1,\n  \"menuIds\": [1, 2, 3]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/roles",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "roles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Role\",\n  \"remark\": \"Updated test role for API testing\",\n  \"status\": 1,\n  \"menuIds\": [1, 2, 3, 4]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/roles/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "roles", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/roles/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "roles", "2"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menu Management",
+      "item": [
+        {
+          "name": "List Menus",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/menus",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Menu by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/menus/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Menu",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": 0,\n  \"parentId\": null,\n  \"name\": \"Test Menu\",\n  \"path\": \"/test\",\n  \"component\": \"TestComponent\",\n  \"icon\": \"test-icon\",\n  \"isExt\": false,\n  \"extOpenMode\": 1,\n  \"keepAlive\": true,\n  \"show\": true,\n  \"status\": 1,\n  \"orderNo\": 100\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/menus",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Menu",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Menu\",\n  \"path\": \"/updated-test\",\n  \"icon\": \"updated-test-icon\",\n  \"orderNo\": 101\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/menus/10",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus", "10"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Menu",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/menus/10",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus", "10"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/menus/permissions",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "menus", "permissions"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Todo Management",
+      "item": [
+        {
+          "name": "List Todos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/todos?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["todos"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Todo by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/todos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["todos", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Todo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"Complete API testing documentation\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/todos",
+              "host": ["{{baseUrl}}"],
+              "path": ["todos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Todo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"Updated: Complete API testing documentation with examples\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/todos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["todos", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Todo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/todos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["todos", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NetDisk Management",
+      "item": [
+        {
+          "name": "Get File List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/list?path=/&marker=&key=",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "list"],
+              "query": [
+                {
+                  "key": "path",
+                  "value": "/"
+                },
+                {
+                  "key": "marker",
+                  "value": ""
+                },
+                {
+                  "key": "key",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Directory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"path\": \"/\",\n  \"dirName\": \"test-folder\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/mkdir",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "mkdir"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Upload Token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/token",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "token"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get File Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/info?name=test.txt&path=/",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "info"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "test.txt"
+                },
+                {
+                  "key": "path",
+                  "value": "/"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rename File/Folder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"path\": \"/\",\n  \"name\": \"test-folder\",\n  \"toName\": \"renamed-folder\",\n  \"type\": \"dir\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/rename",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "rename"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Files/Folders",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"files\": [\"test-file.txt\"],\n  \"path\": \"/\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/netdisk/manage/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["netdisk", "manage", "delete"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Online Users",
+      "item": [
+        {
+          "name": "List Online Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/online/list",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "online", "list"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Kick User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/system/online/kick",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "online", "kick"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Task Management",
+      "item": [
+        {
+          "name": "List Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/tasks?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "tasks"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Task by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/tasks/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "tasks", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/tasks/1/start",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "tasks", "1", "start"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Stop Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/tasks/1/stop",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "tasks", "1", "stop"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/system/tasks/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["system", "tasks", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Swagger Documentation",
+      "item": [
+        {
+          "name": "API Documentation",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api-docs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api-docs"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
