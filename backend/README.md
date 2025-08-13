@@ -2,11 +2,11 @@
 
 ![](https://img.shields.io/github/commit-activity/m/buqiyuan/nest-admin) ![](https://img.shields.io/github/license/buqiyuan/nest-admin) ![](https://img.shields.io/github/repo-size/buqiyuan/nest-admin) ![](https://img.shields.io/github/languages/top/buqiyuan/nest-admin)
 
-**基于 NestJs + TypeScript + TypeORM + Redis + MySql + Vue3 + Ant Design Vue 编写的一款简单高效的前后端分离的权限管理系统。希望这个项目在全栈的路上能够帮助到你。**
+**A simple and efficient permission management system based on NestJs + TypeScript + TypeORM + Redis + MySql + Vue3 + Ant Design Vue, featuring a fully separated frontend and backend. Hope this project helps you on your full-stack journey.**
 
-- 前端项目地址：[传送门](https://github.com/buqiyuan/vue3-antdv-admin)
+- Frontend project: [Portal](https://github.com/buqiyuan/vue3-antdv-admin)
 
-## 演示地址
+## Demo Links
 
 <ul>
   <li>
@@ -14,9 +14,9 @@
       <summary>
         <a href="https://vue3-antdv-admin.pages.dev/" target="_blank">
         https://vue3-antdv-admin.pages.dev/
-        </a>（墙内）
+        </a> (Mainland China)
       </summary>
-      只读，可以完整地预览项目的初始效果
+      Read-only, you can preview the initial effect of the project.
     </details>
   </li>
   <li>
@@ -24,55 +24,55 @@
       <summary>
         <a href="https://vue3-antd-admin.vercel.app/" target="_blank">
         https://vue3-antd-admin.vercel.app/
-        </a>（墙外）
+        </a> (Outside Mainland China)
       </summary>
       <ul>
         <li>
-        可随意 CRUD，所以你看到的数据可能已经被其他人修改过，而非项目得初始效果，并且数据库的数据会在每天凌晨 4.30 分重置一次。
+        CRUD operations are allowed, so the data you see may have been modified by others and may not reflect the initial state. The database resets daily at 4:30 AM.
         </li>
-        <li>由于是白嫖的国外服务器资源，所以不保熟， 并可能还需要翻墙浏览。</li>
+        <li>Since it's hosted on free overseas servers, stability is not guaranteed and you may need a VPN to access.</li>
       </ul>
     </details>
   </li>
   <li>
    <a href="https://nest-admin.buqiyuan.top/api-docs/" target="_blank">
-      Swagger 文档
+      Swagger Docs
    </a>
   </li>
 </ul>
 
-## 项目启动前的准备工作
+## Preparation Before Starting
 
-- sql 文件：[/deploy/sql/nest_admin.sql](https://github.com/buqiyuan/nest-admin/tree/main/deploy/sql/nest_admin.sql) 用于数据库初始化
-- 项目相关配置，如：配置 mysql 和 redis 连接
-  - 公共配置: [.env](https://github.com/buqiyuan/nest-admin/blob/main/.env)
-  - 开发环境: [.env.development](https://github.com/buqiyuan/nest-admin/blob/main/.env.development)
-  - 生产环境: [.env.production](https://github.com/buqiyuan/nest-admin/blob/main/.env.production)
+- SQL file: [/deploy/sql/nest_admin.sql](https://github.com/buqiyuan/nest-admin/tree/main/deploy/sql/nest_admin.sql) for database initialization
+- Project configuration, e.g., MySQL and Redis connection settings
+  - Common config: [.env](https://github.com/buqiyuan/nest-admin/blob/main/.env)
+  - Development: [.env.development](https://github.com/buqiyuan/nest-admin/blob/main/.env.development)
+  - Production: [.env.production](https://github.com/buqiyuan/nest-admin/blob/main/.env.production)
 
-## 环境要求
+## Requirements
 
 - `nodejs` `20`+
-- `docker` `20.x`+ ，其中 `docker compose`版本需要 `2.17.0`+
+- `docker` `20.x`+ (docker compose version `2.17.0`+ required)
 - `mysql` `8.x`+
-- 使用 [`pnpm`](https://pnpm.io/zh/) 包管理器安装项目依赖
+- Use [`pnpm`](https://pnpm.io/zh/) as the package manager to install dependencies
 
-演示环境账号密码：
+Demo environment account/password:
 
-|   账号    |  密码  |    权限    |
-| :-------: | :----: | :--------: |
-| admin | a123456 | 超级管理员 |
+| Username | Password | Role           |
+| :------: | :------: | :------------: |
+| admin    | a123456  | Super Admin    |
 
-> 所有新建的用户初始密码都为 a123456
+> All newly created users have the initial password: a123456
 
-本地部署账号密码：
+Local deployment account/password:
 
-|   账号    |  密码  |    权限    |
-| :-------: | :----: | :--------: |
-| admin | a123456 | 超级管理员 |
+| Username | Password | Role           |
+| :------: | :------: | :------------: |
+| admin    | a123456  | Super Admin    |
 
-## 快速体验
+## Quick Start
 
-启动成功后，通过 <http://localhost:7001/api-docs/> 访问。
+After starting, visit <http://localhost:7001/api-docs/>.
 
 ```bash
 pnpm docker:up
@@ -80,7 +80,7 @@ pnpm docker:up
 docker compose --env-file .env --env-file .env.production up -d --no-build
 ```
 
-停止并删除所有容器
+Stop and remove all containers
 
 ```bash
 pnpm docker:down
@@ -88,7 +88,7 @@ pnpm docker:down
 docker compose --env-file .env --env-file .env.production down
 ```
 
-删除镜像
+Remove images
 
 ```bash
 pnpm docker:rmi
@@ -96,7 +96,7 @@ pnpm docker:rmi
 docker rmi buqiyuan/nest-admin-server:stable
 ```
 
-查看实时日志输出
+View real-time logs
 
 ```bash
 pnpm docker:logs
@@ -105,24 +105,24 @@ docker compose --env-file .env --env-file .env.production logs -f
 
 ```
 
-## 本地开发
+## Local Development
 
-- 获取项目代码
+- Clone the project
 
 ```bash
 git clone https://github.com/buqiyuan/nest-admin
 ```
 
-- 【可选】如果你是新手，还不太会搭建`mysql/redis`，你可以使用 `Docker` 启动指定服务供本地开发时使用, 例如：
+- [Optional] If you're new and not familiar with setting up `mysql/redis`, you can use `Docker` to start the required services for local development, e.g.:
 
 ```bash
-# 启动MySql服务
+# Start MySql service
 docker compose --env-file .env --env-file .env.development run -d --service-ports mysql
-# 启动Redis服务
+# Start Redis service
 docker compose --env-file .env --env-file .env.development run -d --service-ports redis
 ```
 
-- 安装依赖
+- Install dependencies
 
 ```bash
 cd nest-admin
@@ -131,45 +131,45 @@ pnpm install
 
 ```
 
-- 运行
-  启动成功后，通过 <http://localhost:7001/api-docs/> 访问。
+- Run
+  After starting, visit <http://localhost:7001/api-docs/>.
 
 ```bash
 pnpm dev
 ```
 
-- 打包
+- Build
 
 ```bash
 pnpm build
 ```
 
-## 数据库迁移
+## Database Migration
 
-1. 更新数据库(或初始化数据)
+1. Update database (or initialize data)
 
 ```bash
 pnpm migration:run
 ```
 
-2. 生成迁移
+2. Generate migration
 
 ```bash
 pnpm migration:generate
 ```
 
-3. 回滚到最后一次更新
+3. Rollback to last update
 
 ```bash
 pnpm migration:revert
-```
+``6
 
-更多细节，请移步至[官方文档](https://typeorm.io/migrations)
+For more details, see the [official documentation](https://typeorm.io/migrations)
 
 > [!TIP]
-> 如果你的`实体类`或`数据库配置`有更新，请执行`npm run build`后再进行数据库迁移相关操作。
+> If your `entity classes` or `database configuration` have changed, please run `npm run build` before performing migration operations.
 
-## 系统截图
+## Screenshots
 
 ![](https://s1.ax1x.com/2021/12/11/oTi1nf.png)
 
@@ -179,11 +179,11 @@ pnpm migration:revert
 
 ![](https://s1.ax1x.com/2021/12/11/oTia3n.png)
 
-### 欢迎 Star && PR
+### Welcome Star && PR
 
-**如果项目有帮助到你可以点个 Star 支持下。有更好的实现欢迎 PR。**
+**If this project helps you, please give it a Star. PRs for better implementations are welcome.**
 
-### 致谢
+### Acknowledgements
 
 - [sf-nest-admin](https://github.com/hackycy/sf-nest-admin)
 
